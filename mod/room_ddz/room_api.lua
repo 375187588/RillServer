@@ -9,20 +9,21 @@ local forward = module.forward
 local ROOM 
 
 function dispatch.start(msg)
-    ROOM = require "room_pinchidao.room_pinchidao":new()
+    ROOM = require "room_ddz.room_ddz":new()
 end 
 
 function dispatch.enter(data)
     --TODO:判断超过人数上限
     if ROOM:is_player_num_overload() then
-        return DESK_ERROR.player_no_seat
+		ERROR("enter err player num overload")
+        return false,DESK_ERROR.player_no_seat
     end 
 
 	return ROOM:enter(data)
 end
 
 function dispatch.leave(uid)
-	return ROOM:leave(data)
+	return ROOM:leave(uid)
 end
 
 

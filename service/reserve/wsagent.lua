@@ -40,7 +40,6 @@ function default_dispatch(cmd, msg)
 	if not ok then
 		error(msg)
     end
-    
     return ret 
 end
 
@@ -90,13 +89,13 @@ function CMD.start(conf)
 end
 
 function CMD.disconnect()
-	DEBUG("-------agent disconnect exit------")
+	DEBUG("-------agent disconnect exit uid("..account.uid..")------")
     env.logout(account)
     return true
 end
 
 function CMD.kick()
-    DEBUG("-------agent kick exit------")
+    DEBUG("-------agent kick exit uid("..account.uid..")------")
     env.logout(account)
     return true
 end 

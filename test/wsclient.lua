@@ -7,8 +7,6 @@ end
 
 local M = {}
 
-
-
 local socket = require "clientwebsocket"
 local json = require "cjson"
 local tool = require "tool"
@@ -99,12 +97,29 @@ function M.start()
 	end
 end
 
-M.connect()
-M.send("login.login", {sdkid = 1, account = "test_003", password = "111111"})
-M.send("create_room", {game = "pinchidao"}) --pinchidao
-socket.usleep(50)
-M.send("enter_room", {})
+function CallBack(msg)
+	print("error:"..msg.error)
+end
 
-M.start()
+
+function M.init(ip,port,hander)
+	M.connect(ip,port,hander.CallBack,hander.CallBackTimer)
+end
+
+function M.login(account,password)
+	M.send("login.login", {sdkid = 1, account = account, password = password})
+end
+
+function M.create_room(game_name)
+	M.send("create_room", {game = game_name}) 
+end
+
+function M.enter_room(game,room_id)
+	M.send("enter_room", {id=room_id,game=game})
+end
+
+function M.leave_room()
+	M.send("leave_room",{})
+end
 
 return M

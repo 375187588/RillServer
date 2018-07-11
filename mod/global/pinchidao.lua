@@ -21,7 +21,7 @@ local Room_Map = {
 }
 
 function dispatch.create(room_id)
-	local addr = skynet.newservice("room_pinchidao", "pcd_", room_id)
+	local addr = skynet.newservice("room_pinchidao", "room_pcd", room_id)
 	skynet.call(addr, "lua", "room_api.start", "hello world")
     Room_Map[room_id] = {room_id = room_id, addr = addr,}
     DEBUG("^^^^^^room_pinchidao create^^^^^^^^^^^", inspect(Room_Map))
@@ -41,7 +41,6 @@ end
 
 function dispatch.leave(uid)
 	local id = Player_Map[uid]
-	
 	local  room = Room_Map[id]
 	if not room then
 		skynet.error("movegame leave not room "..id)
