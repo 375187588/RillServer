@@ -77,7 +77,6 @@ local function lua_dispatch(session, addr, cmd, ...)
 		skynet.ret()
 		return false
 	end
-	
 	skyret(table.unpack(ret))
 end
 
@@ -137,12 +136,12 @@ function local_dispatch(cmd1, cmd2, fd, msg, source)
         log.error("local_dispatch handle msg error, cmd = %s, msg = %s, err=%s", cmd1, tool.dump(msg), ret)
 		return true --报错的情况也表示分发到位
     end
-	
     return true, ret 
 end
 
 function client_dispatch(session, source, str)
 	--特殊用法，将session用作fd，减少再次转发给gate
+
 	local fd = session
 	local cmd, check, msg = protopack.unpack(str)
 	if not cmd then
@@ -162,7 +161,7 @@ function client_dispatch(session, source, str)
 	end
 	
 	if ret then
-		local rcmd, rcheck = ret._cmd, ret._check
+		local rcmd, rcheck = ret._cmd.."result", ret._check
 		ret._cmd = nil
 		ret._check = nil
 		local data = protopack.pack(rcmd, rcheck, ret)
